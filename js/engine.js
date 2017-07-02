@@ -80,8 +80,81 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
+        checkGemCollisions();
+        checkPlayerWin();
     }
+
+    function checkCollisions() {
+        allEnemies.forEach(function(enemy) {
+            if (checkObjectCollisions(enemy,player,20,20)) {
+                if (player.role == "invincible") {
+                    enemy.initPosition();
+                }else {
+                    player.initPosition();
+                }
+
+            }
+        });
+    }
+
+    /**
+     * check whether the player is to eat the gem
+     */
+    function checkGemCollisions() {
+
+        allGems.forEach(function (gem) {
+            if (checkObjectCollisions(player,gem,30,40)) {
+                if (gem.color == "blue") {
+                    player.spriteIndex = 1;
+                    player.roleTime = Date.now();
+                    gem.disappear();
+                }else if (gem.color == "red") {
+                    player.win = true;
+                    gem.disappear();
+                }
+            }
+        })
+    }
+
+    /**
+     * check if the player won the clear all the enemy
+     */
+    function checkPlayerWin() {
+        if (player.win) {
+            allEnemies = [];
+        }
+    }
+
+    /***
+     * Check the distance between the object 1 and object 2
+     * @param Object obj1
+     * @param Object obj2
+     * @returns {boolean}
+     */
+    function checkObjectCollisions(obj1,obj2,xPix,yPix) {
+
+        if (is("Object",obj1) && ("x" in obj1) && ("y" in obj1)
+            && is("Object",obj2) && ("x" in obj2) && ("y" in obj2) ) {
+            if (Math.abs(obj1.x - obj2.x) < xPix && Math.abs(obj1.y-obj2.y) < yPix) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Check the type of the object
+     * @param type
+     * @param obj
+     * @returns {boolean}
+     */
+    function is(type, obj) {
+        var clas = Object.prototype.toString.call(obj).slice(8, -1);
+        return obj !== undefined && obj !== null && clas === type;
+    }
+
 
     /* This is called by the update function and loops through all of the
      * objects within your allEnemies array as defined in app.js and calls
@@ -95,6 +168,7 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
+
     }
 
     /* This function initially draws the "game level", it will then call
@@ -152,6 +226,11 @@ var Engine = (function(global) {
         });
 
         player.render();
+        allGems.forEach(function (gem) {
+            gem.render();
+        })
+        victory.render(player);
+
     }
 
     /* This function does nothing but it could have been a good place to
@@ -171,7 +250,11 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/char-horn-girl.png',
+        'images/Gem-Orange.png',
+        'images/Gem-Blue.png',
+        'images/Star.png'
     ]);
     Resources.onReady(init);
 
