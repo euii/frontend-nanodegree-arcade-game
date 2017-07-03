@@ -99,15 +99,15 @@
         readyCallbacks.push(func);
     }
 
-    // /**
-    //  * Generate a random number
-    //  * @param min
-    //  * @param max
-    //  * @returns {number}
-    //  */
-    // var random = function (min,max) {
-    //     return Math.floor(Math.random() * (max - min + 1) + min);
-    // }
+    /**
+     * Generate a random number
+     * @param min
+     * @param max
+     * @returns {number}
+     */
+     window.random = function (min,max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
 
     /* This object defines the publicly accessible functions available to
      * developers by creating a global Resources object.

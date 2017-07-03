@@ -87,7 +87,7 @@ var Engine = (function(global) {
 
     function checkCollisions() {
         allEnemies.forEach(function(enemy) {
-            if (checkObjectCollisions(enemy,player,20,20)) {
+            if (checkObjectCollisions(enemy,player,50,50)) {
                 if (player.role == "invincible") {
                     enemy.initPosition();
                 }else {

@@ -3,9 +3,9 @@
 var Enemy = function(speed,row) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
-    var YRow = [60,140,230];
+    var yRow = [60,140,230];
     this.x = 0;
-    this.y = YRow[row];
+    this.y = yRow[row];
     this.speed = speed;
 
     // The image/sprite for our enemies, this uses
@@ -20,7 +20,7 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     // console.log("Enemy update"+dt);
-    if (this.x > 500) this.x = 0;
+    if (this.x > 500) this.x = -100;
     this.x += dt*this.speed;
     // console.log("Enemy update"+this.x);
 };
@@ -138,15 +138,15 @@ Victory.prototype.render = function (player) {
 
 }
 
-/**
- * Generate a random number
- * @param min
- * @param max
- * @returns {number}
- */
-var random = function (min,max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-}
+// /**
+//  * Generate a random number
+//  * @param min
+//  * @param max
+//  * @returns {number}
+//  */
+// var random = function (min,max) {
+//     return Math.floor(Math.random() * (max - min + 1) + min);
+// }
 
 
 // Now instantiate your objects.
